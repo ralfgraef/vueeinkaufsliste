@@ -7,8 +7,7 @@ Vue.use(Vuex)
 import db from '@/components/firebaseInit'
 
 export const store = new Vuex.Store({
-  state:{ items:[
-   { title:'', checked: '', date:'' }]
+  state:{ items:[]
     },
   mutations:{
     update(state, data) {
@@ -18,13 +17,9 @@ export const store = new Vuex.Store({
   actions:{
     fetchData(context) {db.collection("items").get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
-          // doc.data() is never undefined for query doc snapshots
-          // store.state.item.title = doc.data.title
-          // store.state.item.checked = doc.data.checked
-          // store.state.item.date = doc.data.date
-          
-          console.log(doc.id, " => ", doc.data());
-         context.commit('update', doc.data())
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        context.commit('update', doc.data())
       });
     })
   }  
