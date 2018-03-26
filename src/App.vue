@@ -49,7 +49,8 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('fetchData');
+    this.$store.dispatch('fetchDataItems');
+    this.$store.dispatch('fetchDataShoppingLists');
     //console.log(this.$store.state)
   },
   name: 'App'
