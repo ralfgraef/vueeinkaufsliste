@@ -1,22 +1,36 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <br>
-    <v-jumbotron color="grey lighten-2">
-      <v-container fill-height>
-        <v-layout align-center>
-          <v-flex>
-            <h3 class="display-3">EinkaufsListe</h3>
-            <span class="subheading">Als Einkaufsliste wird ein loses Stück Papier bezeichnet, das eine Liste von schriftlich notierten Lebensmitteln und anderen Produkten enthält, die eingekauft werden sollen.
-            Mit anderen Worten handelt es sich um eine Merkhilfe in Form einer Checklistensammlung.</span>
-            <v-divider class="my-3"></v-divider>
-            <div class="title mb-3">Check out our digital Einkaufsliste!</div>
-            <v-btn large color="primary" class="mx-0" to="/list">See more</v-btn>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-jumbotron>
+    
+    <v-card xs6>
+      <v-list two-line subheader>
+        <v-subheader>Aktuelle Listen:</v-subheader>
+          <v-list-tile avatar v-for="list in shoppingLists" :key="list.id">
+            <v-list-tile-content  class="mb-2">
+              <v-list-tile-title>{{ list.shoppingListName }} ID: {{ list.id }}</v-list-tile-title>
+              <v-list-tile-sub-title>Erstellt am: {{ list.date }}</v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
+      </v-list>
+    </v-card>
   </v-container>
 </template>
+
+<script>
+  export default {
+    computed: {
+      shoppingLists(){
+        return this.$store.state.shoppingLists
+      }
+    },
+
+    data () {
+      return {
+     
+      }
+    }
+  }
+</script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>

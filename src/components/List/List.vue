@@ -5,11 +5,10 @@
       <br>
       <v-card>
         <v-list two-line subheader>
-          <v-subheader>Aktuelle Listen:</v-subheader>
           
           <v-list-tile avatar v-for="list in shoppingLists" :key="list.id">
             <v-list-tile-content>
-              <v-list-tile-title>{{ list.shoppingListName }}</v-list-tile-title>
+              <v-list-tile-title><h2>{{ list.shoppingListName }}</h2></v-list-tile-title>
               <v-list-tile-sub-title>Erstellt am: {{ list.date }}</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
@@ -20,12 +19,10 @@
 
       <v-card>
         <v-list two-line subheader>
-          <v-subheader>vuex state-test</v-subheader>
           
           <v-list-tile avatar v-for="item in items" :key="item.itemTitle">
             <v-list-tile-content>
               <v-list-tile-title>{{ item.itemTitle }}</v-list-tile-title>
-              <v-list-tile-sub-title>Date: {{ item.itemDate }}</v-list-tile-sub-title>
             </v-list-tile-content>
             <v-list-tile-action>
               <v-checkbox v-model="item.itemChecked"></v-checkbox>
