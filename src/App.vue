@@ -26,8 +26,8 @@
     <v-content>
       <router-view/>
     </v-content>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; 2018 Ralf Johann Gräf</span>
+    <v-footer :fixed="fixed" app >
+      <span class="mx-auto">&copy; {{ new Date().getFullYear() }} Ralf Johann Gräf</span>
     </v-footer>
   </v-app>
 </template>
@@ -53,6 +53,7 @@ export default {
     this.$store.dispatch('fetchDataShoppingLists');
     //console.log(this.$store.state)
   },
+ 
   name: 'App'
 }
 </script>

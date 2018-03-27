@@ -1,15 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import firebase from 'firebase'
+import Router from 'vue-router'
 
 Vue.use(Vuex)
+Vue.use(Router)
 
 import db from '@/components/firebaseInit'
 
 export const store = new Vuex.Store({
   state:{ 
     items:[],
-    shoppingLists: []
+    shoppingLists: [],
+    showShoppingList: []
     },
   mutations:{
     updateitems(state, data) {
@@ -17,6 +20,9 @@ export const store = new Vuex.Store({
     },
     updateshoppingLists(state, data) {
       store.state.shoppingLists.push(data)
+    },
+    updateshoppingList (state, data) {
+      store.state.showShoppingList.push(data)
     }
 
   },
@@ -24,7 +30,7 @@ export const store = new Vuex.Store({
     fetchDataItems(context) {db.collection("items").get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
         // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
+        //console.log(doc.id, " => ", doc.data());
         context.commit('updateitems', doc.data())
       });
     })
@@ -32,11 +38,21 @@ export const store = new Vuex.Store({
     fetchDataShoppingLists(context) {db.collection("shoppingLists").get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
         // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
+        //console.log(doc.id, " => ", doc.data());
         context.commit('updateshoppingLists', doc.data())
       });
     })
-    }    
+    },
+    fetchDataSingleList(context) {
+      console.log(this.$route.params.list_id)
+      db.collection('shoppingLists').where('list_id', '==', this.$route.params.list_id).get()
+      .then(querySnapshot =>{
+        querySnapshot.forEach(doc => {
+          console.log(doc.id, " => ", doc.data());
+          context.commit('updateshoppingList', doc.data())
+        })  
+      })
+    }  
   },
   getters:{}
 })
