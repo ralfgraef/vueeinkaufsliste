@@ -27,7 +27,7 @@
       <router-view/>
     </v-content>
     <v-footer :fixed="fixed" app >
-      <span class="mx-auto">&copy; {{ new Date().getFullYear() }} Ralf Johann Gräf</span>
+      <span class="right">&copy; {{ new Date().getFullYear() }} Ralf Johann Gräf</span>
     </v-footer>
   </v-app>
 </template>

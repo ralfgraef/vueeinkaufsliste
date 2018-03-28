@@ -1,8 +1,7 @@
 <template>
+<v-container>
   <v-layout row>
     <v-flex xs12>
-     
-
       <v-card>
         <v-list two-line subheader>
           
@@ -12,8 +11,6 @@
               <v-list-tile-sub-title>Erstellt am: {{ shoppingList.list_date }}</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
-          
-         
         </v-list>
       </v-card>
 
@@ -33,7 +30,6 @@
 
       <v-card>
         <v-list two-line subheader>
-          
           <v-list-tile avatar v-for="item in items" :key="item.item_id">
             <v-list-tile-content>
               <v-list-tile-title>{{ item.item_name }}</v-list-tile-title>
@@ -42,12 +38,11 @@
               <v-checkbox v-model="item.item_checked"></v-checkbox>
             </v-list-tile-action>
           </v-list-tile>
-          
-         
         </v-list>
       </v-card>
     </v-flex>
   </v-layout>
+</v-container>
 </template>
 <script>
 
