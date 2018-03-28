@@ -41,16 +41,7 @@ export const store = new Vuex.Store({
       });
       })
     }
-    // fetchDataSingleList(context) {
-    //   console.log(this.$route.params.list_id)
-    //   db.collection('shoppingLists').where('list_id', '==', this.$route.params.list_id).get()
-    //   .then(querySnapshot =>{
-    //     querySnapshot.forEach(doc => {
-    //       console.log(doc.id, " => ", doc.data());
-    //       context.commit('updateshoppingList', doc.data())
-    //     })  
-    //   })
-    // }  
+    
   },
   getters:{
     shoppingLists (state) {
@@ -58,9 +49,9 @@ export const store = new Vuex.Store({
     },
 
     shoppingList (state) {
-      return (list_id) =>{
+      return (listID) =>{
         return state.shoppingLists.find((list) => {
-          list.id === list_id
+          return list.list_id === listID
         })
       }
     }

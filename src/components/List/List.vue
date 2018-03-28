@@ -1,6 +1,6 @@
 <template>
   <v-layout row>
-    <v-flex xs12 sm6 offset-sm3>
+    <v-flex xs12>
      
 
       <v-card>
@@ -8,8 +8,8 @@
           
           <v-list-tile avatar>
             <v-list-tile-content>
-              <v-list-tile-title><h2>{{ list_name }}</h2></v-list-tile-title>
-              <v-list-tile-sub-title>Erstellt am: {{ list_date }}</v-list-tile-sub-title>
+              <v-list-tile-title><h2>{{ shoppingList.list_name }}</h2></v-list-tile-title>
+              <v-list-tile-sub-title>Erstellt am: {{ shoppingList.list_date }}</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
           
@@ -50,53 +50,58 @@
   </v-layout>
 </template>
 <script>
-import db from '@/components/firebaseInit'
+
   export default {
+    props: [
+      'list_id'
+    ],
+
     computed: {
       items(){
         return this.$store.state.items
       },
       shoppingLists(){
         return this.$store.getters.shoppingLists
+      },
+      shoppingList(){
+        return this.$store.getters.shoppingList(this.list_id)
       }
     },
 
     data () {
       return {
-        list_id: null,
-        list_date: null,
-        list_name: false
-      }
-    },
-
-    beforeRouteEnter(to, from, next) {
-      db.collection('shoppingLists').where('list_id', '==', to.params.list_id).get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          next (vm => {
-            vm.list_id = doc.data().list_id
-            vm.list_name = doc.data().list_name
-            vm.list_date = doc.data().list_date
-          })
-        })
-      })
-    },
-  
-    watch: {
-      '$route': 'fetchData'
-    },
-
-    methods: {
-      fetchData(){
-        db.collection('shoppingLists').where('list_id', '==', this.$route.params.list_id).get()
-        .then(querySnapshot =>{
-          querySnapshot.forEach(doc => {
-            this.list_id = doc.data().list_id
-            this.list_name = doc.data().list_name
-            this.list_date = doc.data().list_date
-          })  
-        })
+        
       }
     }
+
+    // beforeRouteEnter(to, from, next) {
+    //   db.collection('shoppingLists').where('list_id', '==', to.params.list_id).get()
+    //   .then(querySnapshot => {
+    //     querySnapshot.forEach(doc => {
+    //       next (vm => {
+    //         vm.list_id = doc.data().list_id
+    //         vm.list_name = doc.data().list_name
+    //         vm.list_date = doc.data().list_date
+    //       })
+    //     })
+    //   })
+    // },
+  
+    // watch: {
+    //   '$route': 'fetchData'
+    // },
+
+    // methods: {
+    //   fetchData(){
+    //     db.collection('shoppingLists').where('list_id', '==', this.$route.params.list_id).get()
+    //     .then(querySnapshot =>{
+    //       querySnapshot.forEach(doc => {
+    //         this.list_id = doc.data().list_id
+    //         this.list_name = doc.data().list_name
+    //         this.list_date = doc.data().list_date
+    //       })  
+    //     })
+    //   }
+    // }
   } 
 </script>
