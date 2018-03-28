@@ -57,7 +57,7 @@ import db from '@/components/firebaseInit'
         return this.$store.state.items
       },
       shoppingLists(){
-        return this.$store.state.shoppingLists
+        return this.$store.getters.shoppingLists
       }
     },
 

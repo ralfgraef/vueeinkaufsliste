@@ -9,6 +9,12 @@
             <v-list-tile-content  class="mb-2">
               <v-list-tile-title>{{ list.list_name }} ID: {{ list.list_id }}</v-list-tile-title>
               <v-list-tile-sub-title>Erstellt am: {{ list.list_date }}</v-list-tile-sub-title>
+              <v-card-actions>
+                <v-btn flat right :to="'/' + list.list_id">
+                <v-icon left light>arrow_forward</v-icon>
+                  View List
+                </v-btn>
+          </v-card-actions>
             </v-list-tile-content>
           </v-list-tile>
       </v-list>
@@ -20,13 +26,13 @@
   export default {
     computed: {
       shoppingLists(){
-        return this.$store.state.shoppingLists
+        return this.$store.getters.shoppingLists
       }
     },
 
     data () {
       return {
-     
+        
       }
     }
   }
