@@ -41,8 +41,8 @@ export default {
       sideNav: false,
       fixed: true,
       menueItems: [
-        { icon: 'face', title: 'Register', link: '/register' },
-        { icon: 'lock_open', title: 'Log in', link: '/login' }
+        { icon: 'group_add', title: 'Register', link: '/register' },
+        { icon: 'input', title: 'Log in', link: '/login' }
       ]
     }
   },
