@@ -14,12 +14,16 @@
              <v-card-actions>
                   <v-btn flat  :to="'/list/' + list.list_id" class="right">
                   <v-icon left light>arrow_forward</v-icon>
-                    View List
+                    Ansehen
                   </v-btn>
                 </v-card-actions>
           </v-list-tile>
       </v-list>
     </v-card>
+     <v-btn flat  :to="'/newlist'" class="right">
+                  <v-icon left light>forward</v-icon>
+                    Neue Liste
+                  </v-btn>
   </v-container>
 </template>
 
