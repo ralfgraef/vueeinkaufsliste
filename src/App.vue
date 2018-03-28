@@ -2,11 +2,11 @@
   <v-app>
     <v-navigation-drawer temporary v-model="sideNav" fixed>
       <v-list>
-         <v-list-tile v-for="item in menueItems" :key="item.title" :to="item.link">
+         <v-list-tile v-for="menueItem in menueItems" :key="menueItem.title" :to="menueItem.link">
           <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon>{{ menueItem.icon }}</v-icon>
           </v-list-tile-action>
-          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+          <v-list-tile-title>{{ menueItem.title }}</v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
@@ -17,9 +17,9 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-xs-only">
-        <v-btn flat v-for="item in menueItems" :key="item.title" :to="item.link">
-          <v-icon left>{{ item.icon }}</v-icon>
-          {{ item.title }}
+        <v-btn flat v-for="menueItem in menueItems" :key="menueItem.title" :to="menueItem.link">
+          <v-icon left>{{ menueItem.icon }}</v-icon>
+          {{ menueItem.title }}
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -41,8 +41,6 @@ export default {
       sideNav: false,
       fixed: true,
       menueItems: [
-        { icon: 'list', title: 'EinkaufsListe', link: '/list' },
-        { icon: 'person', title: 'Profile', link: '/profile' },
         { icon: 'face', title: 'Register', link: '/register' },
         { icon: 'lock_open', title: 'Log in', link: '/login' }
       ]

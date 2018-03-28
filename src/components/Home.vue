@@ -12,7 +12,7 @@
                
             </v-list-tile-content>
              <v-card-actions>
-                  <v-btn flat  :to="'/' + list.list_id" class="right">
+                  <v-btn flat  :to="'/list/' + list.list_id" class="right">
                   <v-icon left light>arrow_forward</v-icon>
                     View List
                   </v-btn>

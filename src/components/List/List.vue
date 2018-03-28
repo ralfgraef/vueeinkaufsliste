@@ -34,12 +34,12 @@
       <v-card>
         <v-list two-line subheader>
           
-          <v-list-tile avatar v-for="item in items" :key="item.itemTitle">
+          <v-list-tile avatar v-for="item in items" :key="item.item_id">
             <v-list-tile-content>
-              <v-list-tile-title>{{ item.itemTitle }}</v-list-tile-title>
+              <v-list-tile-title>{{ item.item_name }}</v-list-tile-title>
             </v-list-tile-content>
             <v-list-tile-action>
-              <v-checkbox v-model="item.itemChecked"></v-checkbox>
+              <v-checkbox v-model="item.item_checked"></v-checkbox>
             </v-list-tile-action>
           </v-list-tile>
           
