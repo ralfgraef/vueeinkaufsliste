@@ -6,7 +6,7 @@
    
     <v-card xs6>
           <v-btn flat  :to="'/newlist'" class="right">
-      <v-icon left light>add</v-icon>
+      <v-icon left light>control_point</v-icon>
         Neue Liste
     </v-btn>
       <v-list two-line subheader>
