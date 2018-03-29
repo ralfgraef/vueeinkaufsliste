@@ -5,7 +5,7 @@
         <v-card>
           <v-card-text>
             <v-container>
-              <form @submit.prevent="onSignup">
+              <form @submit.prevent="onRegister">
                 <v-layout row>
                   <v-flex xs12>
                     <v-text-field
@@ -60,6 +60,21 @@
         email: '',
         password: '',
         confirmPassword: ''
+      }
+    },
+    computed: {
+      comparePasswords () {
+        return this.password !== this.confirmPassword ? 'Passwords do not match' : ''
+      }
+    },
+    methods: {
+      onRegister () {
+        //Vuex
+        console.log({
+          email:this.email,
+          password: this.password,
+          comfirmPassword: this.confirmPassword
+        })
       }
     }
   }

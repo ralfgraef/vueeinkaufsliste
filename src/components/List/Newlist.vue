@@ -35,7 +35,8 @@
   export default {
     data () {
       return {
-        name: ''
+        name: '',
+        id:''
       }
     },
     computed: {
@@ -45,12 +46,16 @@
     },
     methods: {
       onCreateNewList () {
+        if(!this.formIsValid) {
+          return
+        }
         const listData = {
         name: this.name,
         date: new Date(),
         id: 7
         }  
         this.$store.dispatch('createNewList', listData)
+        this.$router.push('/')
       }
     }
   }
