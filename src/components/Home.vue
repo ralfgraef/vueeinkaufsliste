@@ -1,13 +1,10 @@
 <template>
   <v-container>
     <br>
-    <br>
-    <br>
-   
     <v-card xs6>
           <v-btn flat  :to="'/newlist'" class="right">
-      <v-icon left light>control_point</v-icon>
-        Neue Liste
+       Neue Liste   
+      <v-icon right light>control_point</v-icon>
     </v-btn>
       <v-list two-line subheader>
         <v-subheader>Aktuelle Listen:

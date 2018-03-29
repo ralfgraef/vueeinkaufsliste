@@ -18,8 +18,8 @@
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-xs-only">
         <v-btn flat v-for="menueItem in menueItems" :key="menueItem.title" :to="menueItem.link">
-          <v-icon left>{{ menueItem.icon }}</v-icon>
           {{ menueItem.title }}
+          <v-icon right>{{ menueItem.icon }}</v-icon>
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -27,7 +27,7 @@
       <router-view/>
     </v-content>
     <v-footer :fixed="fixed" app >
-      <span class="right">&copy; {{ new Date().getFullYear() }} Ralf Johann Gräf</span>
+      <span class="ml-3">&copy; {{ new Date().getFullYear() }} Ralf Johann Gräf</span>
     </v-footer>
   </v-app>
 </template>
