@@ -16,10 +16,13 @@ export const store = new Vuex.Store({
 
   mutations:{
     updateitems(state, data) {
-      store.state.items.push(data)
+      state.items.push(data)
     },
     updateshoppingLists(state, data) {
-      store.state.shoppingLists.push(data)
+      state.shoppingLists.push(data)
+    },
+    createNewList (state, payload) {
+      state.shoppingLists.push(payload)
     }
   },
 
@@ -40,8 +43,17 @@ export const store = new Vuex.Store({
         context.commit('updateshoppingLists', doc.data())
       });
       })
+    },
+
+    createNewList ({commit}, payload) {
+      const list = {
+        list_name: payload.name,
+        list_date: payload.date,
+        list_id: payload.id
+      }
+      //Reach out to firestore and store
+      commit('createNewList', list)
     }
-    
   },
   getters:{
     shoppingLists (state) {
