@@ -11,7 +11,10 @@ import db from '@/components/firebaseInit'
 export const store = new Vuex.Store({
   state:{ 
     items:[],
-    shoppingLists:[]
+    shoppingLists:[],
+    user: null,
+    loading: false,
+    error: null
   },
 
   mutations:{
@@ -23,6 +26,18 @@ export const store = new Vuex.Store({
     },
     createNewList (state, payload) {
       state.shoppingLists.push(payload)
+    },
+    setUser (state, payload) {
+      state.user = payload
+    },
+    setLoading (state, payload) {
+      state.loading = payload
+    },
+    setError (state, payload) {
+      state.error = payload
+    },
+    clearError (state) {
+      state.error = null
     }
   },
 
@@ -53,9 +68,60 @@ export const store = new Vuex.Store({
       }
       //Reach out to firestore and store
       commit('createNewList', list)
+    },
+
+    regUserUp({commit}, payload) {
+      commit('setLoading', true)
+      commit('clearError')
+      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+      .then (
+        user => {
+          commit('setLoading', false)
+          const newUser = {
+            id: user.uid,
+            shoppingLists: []
+          }
+          commit('setUser', newUser)
+        }
+      )
+      .catch (
+        error => {
+          commit('setLoading', false)
+          commit('setError', error)
+          console.log(error)
+        }
+      )
+    },
+
+    logUserIn ({commit}, payload) {
+      commit('setLoading', true)
+      commit('clearError')
+      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+      .then(
+        user => {
+          commit('setLoading', false)
+          const newUser = {
+            id: user.uid,
+            shoppingLists: []
+          }
+          commit('setUser', newUser)
+        }
+      )
+      .catch (
+        error => {
+          commit('setLoading', false)
+          commit('setError', error)
+          console.log(error)
+        }
+      )
+    },
+    clearError ({commit}) {
+      commit('clearError')
     }
   },
+
   getters:{
+
     shoppingLists (state) {
       return state.shoppingLists
     },
@@ -66,6 +132,18 @@ export const store = new Vuex.Store({
           return list.list_id === listID
         })
       }
+    },
+
+    user (state) {
+      return state.user
+    },
+
+    loading (state) {
+      return state.loading
+    },
+
+    error (state) {
+      return state.error
     }
   }
 })

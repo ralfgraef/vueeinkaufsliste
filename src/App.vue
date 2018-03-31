@@ -39,13 +39,29 @@ export default {
     return {
       title: 'EinkaufsListe',
       sideNav: false,
-      fixed: true,
-      menueItems: [
+      fixed: true
+    }
+  },
+
+  computed: {
+    menueItems () {
+      let menueItems = [
         { icon: 'group_add', title: 'Register', link: '/register' },
         { icon: 'input', title: 'Log in', link: '/login' }
       ]
+      if (this.userIsAuthenticated) {
+        menueItems = [
+        { icon: 'person', title: 'Profile', link: '/profile' }
+        ]
+      }
+      return menueItems
+    },
+
+    userIsAuthenticated () {
+      return this.$store.getters.user !== null && this.$store.getters.user !== undefined 
     }
   },
+
   created () {
     this.$store.dispatch('fetchDataItems');
     this.$store.dispatch('fetchDataShoppingLists');
