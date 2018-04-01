@@ -14,31 +14,42 @@
         </v-card-actions>
       </v-card>
     </v-dialog> -->
-   
-    <v-card xs6>
-        <v-btn flat  :to="'/newlist'" class="right">
-       Neue Liste   
-      <v-icon right light>control_point</v-icon>
-    </v-btn> 
-       <v-list two-line subheader>
-        <v-subheader><h3>Aktuelle Listen:</h3>
-        </v-subheader>
-          <v-list-tile avatar v-for="list in shoppingLists" :key="list.list_id">
-            <v-list-tile-content>
-              <v-list-tile-title>{{ list.list_name }} ID: {{ list.list_id }}</v-list-tile-title>
-              <v-list-tile-sub-title>Erstellt am: {{ list.list_date | formatDate }}</v-list-tile-sub-title>
-               
-            </v-list-tile-content>
-              <v-card-actions>
-                  <v-btn flat  :to="'/list/' + list.list_id" class="right">
-                 
+    <v-layout>
+      <v-flex xs12 class="text-xs-center">
+        <v-progress-circular 
+        indeterminate 
+        color="primary"
+        :width="7"
+        :size="70"
+        v-if="loading"
+        ></v-progress-circular>
+      </v-flex>
+    </v-layout>
+
+    <v-layout row wrap v-if="!loading">
+      <v-flex xs12>
+        <v-card>
+          <v-btn flat  :to="'/newlist'" class="right">
+          Neue Liste   
+          <v-icon right light>control_point</v-icon>
+          </v-btn> 
+          <v-list two-line subheader>
+            <v-subheader><h3>Aktuelle Listen:</h3></v-subheader>
+              <v-list-tile avatar v-for="list in shoppingLists" :key="list.list_id">
+                <v-list-tile-content class="text-xs-left">
+                  <v-list-tile-title>{{ list.list_name }} ID: {{ list.list_id }}</v-list-tile-title>
+                  <v-list-tile-sub-title>Erstellt am: {{ list.list_date | formatDate }}</v-list-tile-sub-title>
+                </v-list-tile-content>
+                  <v-card-actions>
+                    <v-btn flat  :to="'/list/' + list.list_id" class="right">
                     Ansehen
-                  </v-btn>
-              </v-card-actions>  
-          </v-list-tile>
-      </v-list>
-    </v-card>
-    
+                    </v-btn>
+                  </v-card-actions>  
+              </v-list-tile>
+          </v-list>
+        </v-card>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
@@ -47,6 +58,9 @@
     computed: {
       shoppingLists(){
         return this.$store.getters.shoppingLists
+      },
+      loading () {
+        return this.$store.getters.loading
       }
     },
 
@@ -57,8 +71,3 @@
     }
   }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
-</style>

@@ -25,7 +25,7 @@ export const store = new Vuex.Store({
       state.shoppingLists.push(data)
     },
     createNewList (state, payload) {
-      state.shoppingLists.push(payload)
+      state.shoppingLists.unshift(payload)
     },
     setUser (state, payload) {
       state.user = payload
@@ -44,30 +44,50 @@ export const store = new Vuex.Store({
   actions:{
     fetchDataItems(context) {db.collection("items").get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
-        // doc.data() is never undefined for query doc snapshots
-        //console.log(doc.id, " => ", doc.data());
+        
         context.commit('updateitems', doc.data())
       });
       })
     },
 
-    fetchDataShoppingLists(context) {db.collection("shoppingLists").get().then(function(querySnapshot) {
+    fetchDataShoppingLists(context) {
+    context.commit('setLoading', true)
+    db.collection("shoppingLists").orderBy('list_date', 'desc').get()
+    .then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
         // doc.data() is never undefined for query doc snapshots
         //console.log(doc.id, " => ", doc.data());
-        context.commit('updateshoppingLists', doc.data())
-      });
+        const data = {
+          'list_id': doc.id,
+          'list_name': doc.data().list_name,
+          'list_date': doc.data().list_date
+        }
+        context.commit('updateshoppingLists', data)
+        context.commit('setLoading', false)
+      })
+      .catch((error) => {
+        console.log(error)
+        
+      })
       })
     },
 
     createNewList ({commit}, payload) {
       const list = {
         list_name: payload.name,
-        list_date: payload.date,
-        list_id: payload.id
+        list_date: payload.date
       }
       //Reach out to firestore and store
-      commit('createNewList', list)
+      db.collection('shoppingLists').add(list)
+      .then((data) => {
+        const key = data.id
+        commit('createNewList', {
+          ...list,
+          list_id: key
+        })
+      })
+      .catch(error => console.log(error))
+      
     },
 
     regUserUp({commit}, payload) {

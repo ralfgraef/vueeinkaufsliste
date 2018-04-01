@@ -9,7 +9,7 @@
           <v-list-tile avatar>
             <v-list-tile-content>
               <v-list-tile-title><h2>{{ shoppingList.list_name }}</h2></v-list-tile-title>
-              <v-list-tile-sub-title>Erstellt am: {{ shoppingList.list_date | formatDate }}</v-list-tile-sub-title>
+              <v-list-tile-sub-title>Erstellt am: {{ shoppingList.list_date | formatDate }} Id: {{shoppingList.list_id}}</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>

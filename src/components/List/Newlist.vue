@@ -35,8 +35,7 @@
   export default {
     data () {
       return {
-        name: '',
-        id:''
+        name: ''
       }
     },
     computed: {
@@ -52,7 +51,6 @@
         const listData = {
         name: this.name,
         date: new Date(),
-        id: 7
         }  
         this.$store.dispatch('createNewList', listData)
         this.$router.push('/')
