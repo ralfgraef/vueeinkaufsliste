@@ -9,7 +9,7 @@
           <v-list-tile avatar>
             <v-list-tile-content>
               <v-list-tile-title><h2>{{ shoppingList.list_name }}</h2></v-list-tile-title>
-              <v-list-tile-sub-title>Erstellt am: {{ shoppingList.list_date | formatDate }} Id: {{shoppingList.list_id}}</v-list-tile-sub-title>
+              <v-list-tile-sub-title>Erstellt am: {{ shoppingList.list_date | formatDate }}</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
@@ -19,7 +19,7 @@
         <v-list two-line subheader>
           
           <v-list-tile avatar v-for="list in shoppingLists" :key="list.list_id">
-            <v-list-tile-content>
+            <v-list-tile-content>v-for="item in shoppingList" :key="item.list_item"
               <v-list-tile-title><h2>{{ list.list_name }}</h2></v-list-tile-title>
               <v-list-tile-sub-title>Erstellt am: {{ list.list_date }}</v-list-tile-sub-title>
             </v-list-tile-content>
@@ -31,12 +31,12 @@
 
       <v-card>
         <v-list two-line subheader>
-          <v-list-tile avatar v-for="item in items" :key="item.item_id">
+          <v-list-tile avatar v-for="(item, list_item) in shoppingList.list_items" :key="item.id">
             <v-list-tile-content>
-              <v-list-tile-title>{{ item.item_name }}</v-list-tile-title>
+              <v-list-tile-title>{{list_item}}</v-list-tile-title>
             </v-list-tile-content>
             <v-list-tile-action>
-              <v-checkbox v-model="item.item_checked"></v-checkbox>
+              <v-checkbox v-model="item.checked"></v-checkbox>
             </v-list-tile-action>
           </v-list-tile>
         </v-list>

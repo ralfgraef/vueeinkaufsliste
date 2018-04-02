@@ -12,6 +12,7 @@ export const store = new Vuex.Store({
   state:{ 
     items:[],
     shoppingLists:[],
+    shoppingListsNames:[],
     user: null,
     loading: false,
     error: null
@@ -23,6 +24,9 @@ export const store = new Vuex.Store({
     },
     updateshoppingLists(state, data) {
       state.shoppingLists.push(data)
+    },
+    updateshoppingListsNames(state, data) {
+      state.shoppingListsNames.push(data)
     },
     createNewList (state, payload) {
       state.shoppingLists.unshift(payload)
@@ -38,6 +42,9 @@ export const store = new Vuex.Store({
     },
     clearError (state) {
       state.error = null
+    },
+    clearShoppingListsNames (state) {
+      state.shoppingListsNames = []
     }
   },
 
@@ -60,16 +67,28 @@ export const store = new Vuex.Store({
         const data = {
           'list_id': doc.id,
           'list_name': doc.data().list_name,
-          'list_date': doc.data().list_date
+          'list_date': doc.data().list_date,
+          'list_items': doc.data().list_items
         }
         context.commit('updateshoppingLists', data)
         context.commit('setLoading', false)
       })
-      .catch((error) => {
-        console.log(error)
-        
+      }).catch(error => console.log(error));
+    },
+
+    fetchDataShoppingListsNames(context) {
+      context.commit('setLoading', true)
+      context.commit('clearShoppingListsNames')
+    db.collection("shoppingLists").orderBy('list_date', 'desc').get()
+    .then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        const data = {
+          'text': doc.data().list_name,
+        }
+        context.commit('updateshoppingListsNames', data)
+        context.commit('setLoading', false)
       })
-      })
+      }).catch(error => console.log(error));
     },
 
     createNewList ({commit}, payload) {
@@ -137,6 +156,9 @@ export const store = new Vuex.Store({
     },
     clearError ({commit}) {
       commit('clearError')
+    },
+    clearShoopingListsNames ({commit}) {
+      commit('clearShoppingListsNames')
     }
   },
 
@@ -144,6 +166,10 @@ export const store = new Vuex.Store({
 
     shoppingLists (state) {
       return state.shoppingLists
+    },
+
+    shoppingListsNames (state) {
+      return state.shoppingListsNames
     },
 
     shoppingList (state) {
