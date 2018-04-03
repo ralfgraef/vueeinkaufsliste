@@ -29,8 +29,9 @@ export default new Router({
       component: Newlist
     },
     {
-      path: '/newitem',
+      path: '/list/:list_id/newitem',
       name: 'newitem',
+      props: true,
       component: Newitem
     },
     {

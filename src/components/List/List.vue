@@ -11,7 +11,7 @@
     small
     fab
     right
-    :to="'/newitem'"
+    :to="'/list/' + (this.list_id) + '/newitem'"
     color="primary"
     class="mt-4"
   >

@@ -109,6 +109,22 @@ export const store = new Vuex.Store({
       
     },
 
+    createNewItem ({commit}, payload) {
+      // const item= {
+      //   list_item: payload.item
+      // }
+      //Reach out to firestore and store
+      db.collection('shoppingLists').doc(payload.id).update({
+        "'list_items.' + payload.item'": payload.item,
+        "'list_items.' + payload.item.checked'": false
+      })
+      .then(() => {
+        console.log('Updated!')
+      })
+      .catch(error => console.log(error))
+      
+    },
+
     regUserUp({commit}, payload) {
       commit('setLoading', true)
       commit('clearError')
