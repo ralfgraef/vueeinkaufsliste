@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import List from '@/components/List/List'
 import Newlist from '@/components/List/Newlist'
+import Newitem from '@/components/List/Newitem'
 import Register from '@/components/User/Register'
 import Login from '@/components/User/Login'
 
@@ -26,6 +27,11 @@ export default new Router({
       path: '/newlist',
       name: 'newlist',
       component: Newlist
+    },
+    {
+      path: '/newitem',
+      name: 'newitem',
+      component: Newitem
     },
     {
       path: '/register',

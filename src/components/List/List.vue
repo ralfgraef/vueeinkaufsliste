@@ -1,9 +1,22 @@
 <template>
 <v-container>
   <br>
+  
   <v-layout row>
     <v-flex xs12>
       <v-card>
+        <v-btn
+    absolute
+    dark
+    small
+    fab
+    right
+    :to="'/newitem'"
+    color="primary"
+    class="mt-4"
+  >
+    <v-icon>add</v-icon>
+  </v-btn>
         <v-list two-line subheader>
           
           <v-list-tile avatar>
@@ -69,35 +82,5 @@
         
       }
     }
-
-    // beforeRouteEnter(to, from, next) {
-    //   db.collection('shoppingLists').where('list_id', '==', to.params.list_id).get()
-    //   .then(querySnapshot => {
-    //     querySnapshot.forEach(doc => {
-    //       next (vm => {
-    //         vm.list_id = doc.data().list_id
-    //         vm.list_name = doc.data().list_name
-    //         vm.list_date = doc.data().list_date
-    //       })
-    //     })
-    //   })
-    // },
-  
-    // watch: {
-    //   '$route': 'fetchData'
-    // },
-
-    // methods: {
-    //   fetchData(){
-    //     db.collection('shoppingLists').where('list_id', '==', this.$route.params.list_id).get()
-    //     .then(querySnapshot =>{
-    //       querySnapshot.forEach(doc => {
-    //         this.list_id = doc.data().list_id
-    //         this.list_name = doc.data().list_name
-    //         this.list_date = doc.data().list_date
-    //       })  
-    //     })
-    //   }
-    // }
   } 
 </script>

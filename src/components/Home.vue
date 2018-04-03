@@ -29,7 +29,7 @@
     <v-layout row wrap v-if="!loading">
       <v-flex xs12>
         <v-card>
-          <v-btn flat  :to="'/newlist'" class="right">
+          <v-btn flat :to="'/newlist'" class="right">
           Neue Liste   
           <v-icon right light>control_point</v-icon>
           </v-btn> 
