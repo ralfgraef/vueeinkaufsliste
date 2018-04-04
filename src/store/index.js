@@ -110,13 +110,14 @@ export const store = new Vuex.Store({
     },
 
     createNewItem ({commit}, payload) {
-      // const item= {
-      //   list_item: payload.item
-      // }
+      
+      var item = {
+        name: payload.item,
+        checked: false
+        }
       //Reach out to firestore and store
-      db.collection('shoppingLists').doc(payload.id).update({
-        "'list_items.' + payload.item'": payload.item,
-        "'list_items.' + payload.item.checked'": false
+      db.collection('shoppingLists/' + payload.id +'/list_items/').add({
+        item
       })
       .then(() => {
         console.log('Updated!')
