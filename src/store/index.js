@@ -115,12 +115,26 @@ export const store = new Vuex.Store({
     },
 
     createNewItem ({commit}, payload) {
+      db.collection("shoppingLists").doc(payload.id).get()
+      .then(function(doc) {
         
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data().list_items);
+            let ratz = {
+              checked: true,
+              name: 'Birne'
+            }
+            let test = new Array ()
+            test.push(doc.data().list_items)
+            test.push(ratz)
+            console.log(test)
+      });
+
         let item = {
         checked: false,
         name: payload.item
         }
-        console.log(item)
+        
       //Reach out to firestore and store
       db.collection('shoppingLists').doc(payload.id).update(
         'list_items', [item]
