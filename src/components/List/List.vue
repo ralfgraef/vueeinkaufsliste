@@ -44,9 +44,9 @@
 
       <v-card>
         <v-list two-line subheader>
-          <v-list-tile avatar v-for="(item, list_item) in shoppingList.list_items" :key="item.id">
+          <v-list-tile avatar v-for="item in shoppingList.list_items" :key="item.id">
             <v-list-tile-content>
-              <v-list-tile-title>{{list_item}}</v-list-tile-title>
+              <v-list-tile-title>{{item}}</v-list-tile-title>
             </v-list-tile-content>
             <v-list-tile-action>
               <v-checkbox v-model="item.checked"></v-checkbox>

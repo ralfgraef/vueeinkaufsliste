@@ -94,7 +94,12 @@ export const store = new Vuex.Store({
     createNewList ({commit}, payload) {
       const list = {
         list_name: payload.name,
-        list_date: payload.date
+        list_date: payload.date,
+        list_items:[ {
+            name:'',
+            checked:false
+          }
+        ]
       }
       //Reach out to firestore and store
       db.collection('shoppingLists').add(list)
@@ -110,15 +115,16 @@ export const store = new Vuex.Store({
     },
 
     createNewItem ({commit}, payload) {
-      
-      var item = {
-        name: payload.item,
-        checked: false
+        
+        let item = {
+        checked: false,
+        name: payload.item
         }
+        console.log(item)
       //Reach out to firestore and store
-      db.collection('shoppingLists/' + payload.id +'/list_items/').add({
-        item
-      })
+      db.collection('shoppingLists').doc(payload.id).update(
+        'list_items', [item]
+      )
       .then(() => {
         console.log('Updated!')
       })
