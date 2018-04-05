@@ -118,31 +118,46 @@ export const store = new Vuex.Store({
       db.collection("shoppingLists").doc(payload.id).get()
       .then(function(doc) {
         
-            // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data().list_items);
-            let ratz = {
-              checked: true,
-              name: 'Birne'
-            }
-            let test = new Array ()
-            test.push(doc.data().list_items)
-            test.push(ratz)
-            console.log(test)
-      });
+        console.log(doc.id, " => ", doc.data().list_items)
 
-        let item = {
-        checked: false,
-        name: payload.item
-        }
+        // doc.data().list_items += doc.data().list_items.push(new Object({
+        //   checked: false,
+        //   name: payload.item
+        // }))
         
-      //Reach out to firestore and store
-      db.collection('shoppingLists').doc(payload.id).update(
-        'list_items', [item]
-      )
-      .then(() => {
-        console.log('Updated!')
-      })
-      .catch(error => console.log(error))
+        // console.log(doc.id, " Neu=> ", arr)
+
+        // console.log('Altes Array: ', old)
+        
+        // old.push(new Object({
+        //   checked: false,
+        //   name: payload.item
+        // }))
+
+        // console.log('Neues Array: ', old)
+        
+
+        // let newArrayItem = {
+        //   checked: false,
+        //   name: payload.item
+        // }
+
+        let asi = (doc.data().list_items.concat(new Object({
+          checked: false,
+          name: payload.item
+        })))
+
+        console.log('Neues Array: ', asi)
+        //Reach out to firestore and store
+        db.collection('shoppingLists').doc(payload.id).update({
+
+          'list_items': asi
+        })
+        .then(() => {
+          console.log('Updated!')
+        })
+        .catch(error => console.log(error))
+      });
       
     },
 

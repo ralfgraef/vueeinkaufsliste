@@ -28,25 +28,11 @@
         </v-list>
       </v-card>
 
-      <!-- <v-card>
-        <v-list two-line subheader>
-          
-          <v-list-tile avatar v-for="list in shoppingLists" :key="list.list_id">
-            <v-list-tile-content>v-for="item in shoppingList" :key="item.list_item"
-              <v-list-tile-title><h2>{{ list.list_name }}</h2></v-list-tile-title>
-              <v-list-tile-sub-title>Erstellt am: {{ list.list_date }}</v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          
-         
-        </v-list>
-      </v-card> -->
-
       <v-card>
         <v-list two-line subheader>
-          <v-list-tile avatar v-for="item in shoppingList.list_items" :key="item.id">
+          <v-list-tile avatar v-for="item in shoppingList.list_items" :key="item.name">
             <v-list-tile-content>
-              <v-list-tile-title>{{item}}</v-list-tile-title>
+              <v-list-tile-title>{{item.name}}</v-list-tile-title>
             </v-list-tile-content>
             <v-list-tile-action>
               <v-checkbox v-model="item.checked"></v-checkbox>
@@ -74,12 +60,15 @@
       },
       shoppingList(){
         return this.$store.getters.shoppingList(this.list_id)
+      },
+      showList(){
+        return this.item.name !== null
       }
     },
 
     data () {
       return {
-        
+        showlist:""
       }
     }
   } 
