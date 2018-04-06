@@ -63,7 +63,6 @@ export default {
   },
 
   created () {
-    this.$store.dispatch('fetchDataItems');
     this.$store.dispatch('fetchDataShoppingLists');
     //console.log(this.$store.state)
   },

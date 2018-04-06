@@ -74,11 +74,12 @@
           return
         }
         const itemData = {
-        item: this.item,
+        name: this.item,
+        checked: false,
         id: this.list_id
         }  
         this.$store.dispatch('createNewItem', itemData)
-        this.$router.push("/")
+        this.$router.push('/list/' + this.list_id)
         console.log(itemData)
       }
     }

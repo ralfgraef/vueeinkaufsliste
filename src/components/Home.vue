@@ -37,7 +37,7 @@
             <v-subheader><h3>Aktuelle Listen:</h3></v-subheader>
               <v-list-tile avatar v-for="list in shoppingLists" :key="list.list_id">
                 <v-list-tile-content class="text-xs-left">
-                  <v-list-tile-title>{{ list.list_name }} ID: {{ list.list_id }}</v-list-tile-title>
+                  <v-list-tile-title>{{ list.list_name }} </v-list-tile-title>
                   <v-list-tile-sub-title>Erstellt am: {{ list.list_date | formatDate }}</v-list-tile-sub-title>
                 </v-list-tile-content>
                   <v-card-actions>

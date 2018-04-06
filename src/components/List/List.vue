@@ -1,8 +1,18 @@
 <template>
 <v-container>
   <br>
-  
-  <v-layout row>
+  <v-layout>
+    <v-flex xs12 class="text-xs-center">
+      <v-progress-circular 
+      indeterminate 
+      color="grey"
+      :width="7"
+      :size="100"
+      v-if="loading"
+      ></v-progress-circular>
+    </v-flex>
+  </v-layout>
+  <v-layout row v-if="!loading">
     <v-flex xs12>
       <v-card>
         <v-btn
@@ -30,7 +40,7 @@
 
       <v-card>
         <v-list two-line subheader>
-          <v-list-tile avatar v-for="item in shoppingList.list_items" :key="item.name">
+          <v-list-tile avatar v-for="item in shoppingList.list_items" :key="item.name" v-if="item.name">
             <v-list-tile-content>
               <v-list-tile-title>{{item.name}}</v-list-tile-title>
             </v-list-tile-content>
@@ -52,23 +62,20 @@
     ],
 
     computed: {
-      items(){
-        return this.$store.state.items
-      },
       shoppingLists(){
         return this.$store.getters.shoppingLists
       },
       shoppingList(){
         return this.$store.getters.shoppingList(this.list_id)
       },
-      showList(){
-        return this.item.name !== null
+      loading () {
+        return this.$store.getters.loading
       }
     },
 
     data () {
       return {
-        showlist:""
+        
       }
     }
   } 

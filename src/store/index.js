@@ -19,9 +19,6 @@ export const store = new Vuex.Store({
   },
 
   mutations:{
-    updateitems(state, data) {
-      state.items.push(data)
-    },
     updateshoppingLists(state, data) {
       state.shoppingLists.push(data)
     },
@@ -30,6 +27,17 @@ export const store = new Vuex.Store({
     },
     createNewList (state, payload) {
       state.shoppingLists.unshift(payload)
+    },
+    updateListItems(state, payload){
+      const list = state.shoppingLists.find(list => {
+        return list.list_id === payload.id
+      })
+      console.log('List vorher:', list);
+      list.list_items.push({
+        name: payload.name,
+        checked: payload.checked
+      })
+      console.log('List nachher:', list);
     },
     setUser (state, payload) {
       state.user = payload
@@ -49,14 +57,6 @@ export const store = new Vuex.Store({
   },
 
   actions:{
-    fetchDataItems(context) {db.collection("items").get().then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-        
-        context.commit('updateitems', doc.data())
-      });
-      })
-    },
-
     fetchDataShoppingLists(context) {
     context.commit('setLoading', true)
     db.collection("shoppingLists").orderBy('list_date', 'desc').get()
@@ -115,46 +115,30 @@ export const store = new Vuex.Store({
     },
 
     createNewItem ({commit}, payload) {
+      commit('setLoading', true)
       db.collection("shoppingLists").doc(payload.id).get()
       .then(function(doc) {
         
         console.log(doc.id, " => ", doc.data().list_items)
 
-        // doc.data().list_items += doc.data().list_items.push(new Object({
-        //   checked: false,
-        //   name: payload.item
-        // }))
-        
-        // console.log(doc.id, " Neu=> ", arr)
+       
 
-        // console.log('Altes Array: ', old)
-        
-        // old.push(new Object({
-        //   checked: false,
-        //   name: payload.item
-        // }))
-
-        // console.log('Neues Array: ', old)
-        
-
-        // let newArrayItem = {
-        //   checked: false,
-        //   name: payload.item
-        // }
-
-        let asi = (doc.data().list_items.concat(new Object({
+        let newItem = (doc.data().list_items.concat(new Object({
           checked: false,
-          name: payload.item
+          name: payload.name,
         })))
 
-        console.log('Neues Array: ', asi)
+        console.log('Neues Array: ', newItem)
         //Reach out to firestore and store
         db.collection('shoppingLists').doc(payload.id).update({
 
-          'list_items': asi
+          'list_items': newItem
         })
         .then(() => {
+          commit('updateListItems', payload)
+          commit('setLoading', false)
           console.log('Updated!')
+
         })
         .catch(error => console.log(error))
       });
