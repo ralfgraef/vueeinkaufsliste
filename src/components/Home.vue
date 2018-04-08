@@ -28,7 +28,7 @@
 
     <v-layout row wrap v-if="!loading">
       <v-flex xs12>
-        <v-card>
+        <v-card v-if="shoppingLists.length>0">
           <v-btn flat :to="'/newlist'" class="right">
           Neue Liste   
           <v-icon right light>control_point</v-icon>
@@ -45,6 +45,21 @@
                     Ansehen
                     </v-btn>
                   </v-card-actions>  
+              </v-list-tile>
+          </v-list>
+        </v-card>
+        <v-card v-else>
+          <v-btn flat :to="'/newlist'" class="right">
+          Neue Liste   
+          <v-icon right light>control_point</v-icon>
+          </v-btn> 
+          <v-list two-line subheader>
+            <v-subheader><h3></h3></v-subheader>
+              <v-list-tile avatar >
+                <v-list-tile-content class="text-xs-left">
+                  <v-list-tile-title>Keine Einkaufsliste vorhanden ... </v-list-tile-title>
+                  <v-list-tile-sub-title></v-list-tile-sub-title>
+                </v-list-tile-content> 
               </v-list-tile>
           </v-list>
         </v-card>

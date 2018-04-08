@@ -2,7 +2,7 @@
   <v-container>
     <v-layout row>
       <v-flex xs12 sm6 offset-sm3>
-        <h2>Neuen EinkaufsListeneintrag anlegen</h2>
+        <h2>Neuen EinkaufsListeneintrag anlegen</h2>{{ shoppingList.list_name }}
         <v-btn
           absolute
           dark
@@ -30,6 +30,7 @@
                 color="grey"
                 v-model="item"
                 required
+                multiple
                 id="Itemhinzu"
                 >
               </v-text-field>
@@ -37,7 +38,7 @@
           </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <v-btn :disabled="!formIsValid" type="submit">Create!</v-btn> 
+              <v-btn :disabled="!formIsValid" type="submit">Das war's!</v-btn> 
             </v-flex>
           </v-layout>
         </form>

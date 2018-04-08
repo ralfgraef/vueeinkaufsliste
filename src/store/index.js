@@ -61,7 +61,10 @@ export const store = new Vuex.Store({
     context.commit('setLoading', true)
     db.collection("shoppingLists").orderBy('list_date', 'desc').get()
     .then(function(querySnapshot) {
+      console.log('querySnapshot.empty: ', querySnapshot.empty);
+      if (querySnapshot.empty==false){
       querySnapshot.forEach(function(doc) {
+        
         // doc.data() is never undefined for query doc snapshots
         //console.log(doc.id, " => ", doc.data());
         const data = {
@@ -72,7 +75,15 @@ export const store = new Vuex.Store({
         }
         context.commit('updateshoppingLists', data)
         context.commit('setLoading', false)
+      
       })
+      }
+      
+      else {
+        context.commit('setLoading', false)
+        console.log('No Data!!');
+      }
+      
       }).catch(error => console.log(error));
     },
 
@@ -92,6 +103,7 @@ export const store = new Vuex.Store({
     },
 
     createNewList ({commit}, payload) {
+      commit('setLoading', true)
       const list = {
         list_name: payload.name,
         list_date: payload.date,
@@ -109,6 +121,8 @@ export const store = new Vuex.Store({
           ...list,
           list_id: key
         })
+        commit('setLoading', false)
+      
       })
       .catch(error => console.log(error))
       
