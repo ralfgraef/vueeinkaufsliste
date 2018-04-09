@@ -2,48 +2,45 @@
   <v-container>
     <v-layout row>
       <v-flex xs12 sm6 offset-sm3>
-        <h2>Neuen EinkaufsListeneintrag anlegen</h2>{{ shoppingList.list_name }}
-        <v-btn
-          absolute
-          dark
-          small
-          fab
-          right
-          :to="'/list/' + (this.list_id) + '/newitem'"
-          color="primary"
-          class="mt-4"
-        >
-          <v-icon>add</v-icon>
-        </v-btn>
+        <h2>Eintrag anlegen für {{ shoppingList.list_name }} - Einkaufsliste</h2>
       </v-flex>
     </v-layout>
     <br>
-    <v-layout row>
+    <v-layout row v-for="(find, index) in finds" :key="index">
       <v-flex xs12>
         <form @submit.prevent='onCreateNewItem'>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <br>
-              <v-text-field
+             
+              
+              <v-text-field 
+                
                 name="item"
-                label="Was willst Du hinzufügen?"
+                autofocus:true
                 color="grey"
-                v-model="item"
-                required
+                v-model="find.name"
                 multiple
                 id="Itemhinzu"
+                placeholder="......."
                 >
+                
               </v-text-field>
+              
             </v-flex>
+            <v-icon @click="onCloseClick">close</v-icon>
           </v-layout>
-          <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
-              <v-btn :disabled="!formIsValid" type="submit">Das war's!</v-btn> 
-            </v-flex>
-          </v-layout>
+          <br>
+          
         </form>
       </v-flex>
     </v-layout>
+    <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+              <v-btn :disabled="!formIsValid" @click="onCreateMore">Mehr ...</v-btn> 
+            
+              <v-btn :disabled="!formIsValid" @click="onShowFinds">Das war's!</v-btn> 
+            </v-flex>
+          </v-layout>
   </v-container>
 </template>
 
@@ -55,12 +52,12 @@
     data () {
       return {
         item:'',  
-        
+        finds: [{name: ''}]
       }
     },
     computed: {
       formIsValid () {
-        return this.item !== ''
+        return this.finds[0].name !== ''
       },
       // shoppingLists(){
       //   return this.$store.getters.shoppingLists
@@ -82,6 +79,19 @@
         this.$store.dispatch('createNewItem', itemData)
         this.$router.push('/list/' + this.list_id)
         console.log(itemData)
+      },
+
+      onCreateMore() {
+        this.finds.push({name});
+        console.log(this.finds);
+      },
+
+      onShowFinds() {
+        console.log('Finds: ', this.finds);
+      },
+
+      onCloseClick() {
+        alert('Closed clicked!!!!');
       }
     }
   }

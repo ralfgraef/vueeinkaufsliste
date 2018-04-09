@@ -66,7 +66,7 @@ export default {
     this.$store.dispatch('fetchDataShoppingLists');
     //console.log(this.$store.state)
   },
- 
+  
   name: 'App'
 }
 </script>
