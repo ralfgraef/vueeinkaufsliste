@@ -54,7 +54,7 @@
               </v-text-field>
               
             </v-flex>
-            <v-icon @click="onCloseClick">close</v-icon>
+            <v-icon @click="onCloseClick(index)">close</v-icon>
           </v-layout>
           <br>
           
@@ -98,6 +98,7 @@
         if(!this.formIsValid) {
           return
         }
+
         const itemData = {
         name: this.item,
         checked: false,
@@ -117,8 +118,9 @@
         console.log('Finds: ', this.finds);
       },
 
-      onCloseClick() {
-        alert('Closed clicked!!!!');
+      onCloseClick(index) {
+        this.finds.splice(index, 1)
+        console.log('After delete: ', this.finds);
       }
     }
   }
