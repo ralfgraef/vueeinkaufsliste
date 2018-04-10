@@ -2,17 +2,44 @@
   <v-container>
     <v-layout row>
       <v-flex xs12 sm6 offset-sm3>
-        <h2>Eintrag anlegen für {{ shoppingList.list_name }} - Einkaufsliste</h2>
+        <h2>{{ shoppingList.list_name }} - Einkaufsliste</h2>
       </v-flex>
     </v-layout>
     <br>
-    <v-layout row v-for="(find, index) in finds" :key="index">
+    
+    <v-layout row v-for="item in shoppingList.list_items" :key="item.name">
       <v-flex xs12>
         <form @submit.prevent='onCreateNewItem'>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
              
+             <v-text-field 
+                
+                name="item"
+                autofocus:true
+                color="grey"
+                v-model="item.name"
+                multiple
+                id="Itemhinzu"
+                >
+                
+              </v-text-field>
+
               
+            </v-flex>
+            <!-- <v-icon @click="onCloseClick">close</v-icon> -->
+          </v-layout>
+              </form>
+            </v-flex>
+          </v-layout>
+        
+
+    <v-layout row v-for="(find, index) in finds" :key="index">
+      <v-flex xs12>
+        <form @submit.prevent='onCreateNewItem'>
+          <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+            
               <v-text-field 
                 
                 name="item"
@@ -21,7 +48,7 @@
                 v-model="find.name"
                 multiple
                 id="Itemhinzu"
-                placeholder="......."
+                :placeholder="item.name"
                 >
                 
               </v-text-field>
