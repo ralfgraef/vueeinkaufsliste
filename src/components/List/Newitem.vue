@@ -42,13 +42,13 @@
             
               <v-text-field 
                 
-                name="item"
+                name="find"
                 autofocus:true
                 color="grey"
                 v-model="find.name"
                 multiple
-                id="Itemhinzu"
-                :placeholder="item.name"
+                id="Findhinzu"
+                placeholder="Text"
                 >
                 
               </v-text-field>
@@ -79,7 +79,11 @@
     data () {
       return {
         item:'',  
-        finds: [{name: ''}]
+        finds: [
+          { name: '',
+            checked: false 
+          }
+        ]
       }
     },
     computed: {
@@ -110,11 +114,19 @@
       },
 
       onCreateMore() {
+        
+        console.log(Object.keys(name).length)
         this.finds.push({name});
         console.log(this.finds);
+
       },
 
       onShowFinds() {
+        this.finds.forEach((item, index)=>{
+          if (item.name=="") {
+            this.finds.splice(index, 1)
+          }
+        })
         console.log('Finds: ', this.finds);
       },
 
