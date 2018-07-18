@@ -8,7 +8,7 @@
     <br>
     <v-layout row>
       <v-flex xs12>
-        <form @submit.prevent="onCreateNewList">
+        <form @submit.prevent="onCreateNewListSelect">
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
                <v-select
@@ -20,12 +20,24 @@
                 required
                 >
                 </v-select>
-                <v-layout row>
-                  <v-flex xs12 sm6 offset-sm3>
-                    <v-btn :disabled="!formIsValid" type="submit">Create List</v-btn>
-                  </v-flex>
-                </v-layout>
               <br>
+              
+            </v-flex>
+          </v-layout>
+          <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+              <v-btn :disabled="!formSelectIsValid" type="submit">Create List</v-btn>
+            </v-flex>
+          </v-layout>
+        </form>
+      </v-flex>
+    </v-layout>
+    <v-layout row>
+      <v-flex xs12>
+        <form @submit.prevent="onCreateNewList">
+          <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+            
               <v-text-field
                 name="name"
                 label="... oder lege einen neuen an."
@@ -58,15 +70,19 @@
         items: []
       }
     },
+
     computed: {
       formIsValid () {
-        return this.name !== '' || this.e1 !== null
+        return this.name !== ''
+      },
+      formSelectIsValid () {
+        return this.e1 !== null
       },
       shopNames () {
         return this.$store.getters.shopNames
       }
-
     },
+
     methods: {
       onCreateNewList () {
         if(!this.formIsValid) {
@@ -78,11 +94,25 @@
         }
         this.$store.dispatch('createNewList', listData)
         this.$router.push('/')
+      },
+      onCreateNewListSelect () {
+        if(!this.formIsValid) {
+          return
+        }
+        console.log(this.e1.text);
+        const listData = {
+        name: this.e1.text,
+        date: new Date(),
+        }
+        this.$store.dispatch('createNewList', listData)
+        this.$router.push('/')
       }
     },
+
     created () {
     this.$store.dispatch('fetchDataShopNames');
     //console.log(this.$store.state)
-  },
+    }
+    
   }
 </script>
