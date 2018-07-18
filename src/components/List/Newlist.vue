@@ -12,18 +12,23 @@
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
                <v-select
-                :items="shoppingListsNames"
+                :items="shopNames"
                 v-model="e1"
-                label="Such Dir einen Shop aus..."
+                label="Such Dir einen bereits vorhandenen Shop aus..."
                 single-line
                 color="grey"
                 required
                 >
                 </v-select>
+                <v-layout row>
+                  <v-flex xs12 sm6 offset-sm3>
+                    <v-btn :disabled="!formIsValid" type="submit">Create List</v-btn>
+                  </v-flex>
+                </v-layout>
               <br>
               <v-text-field
                 name="name"
-                label="Wo willst Du einkaufen?"
+                label="... oder lege einen neuen an."
                 id="name"
                 color="grey"
                 v-model="name"
@@ -34,7 +39,7 @@
           </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <v-btn :disabled="!formIsValid" type="submit">Create List</v-btn> 
+              <v-btn :disabled="!formIsValid" type="submit">Create List</v-btn>
             </v-flex>
           </v-layout>
         </form>
@@ -45,7 +50,7 @@
 
 <script>
   export default {
-    
+
     data () {
       return {
         name: '',
@@ -57,8 +62,8 @@
       formIsValid () {
         return this.name !== '' || this.e1 !== null
       },
-      shoppingListsNames () {
-        return this.$store.getters.shoppingListsNames
+      shopNames () {
+        return this.$store.getters.shopNames
       }
 
     },
@@ -70,13 +75,13 @@
         const listData = {
         name: this.name,
         date: new Date(),
-        }  
+        }
         this.$store.dispatch('createNewList', listData)
         this.$router.push('/')
       }
     },
     created () {
-    this.$store.dispatch('fetchDataShoppingListsNames');
+    this.$store.dispatch('fetchDataShopNames');
     //console.log(this.$store.state)
   },
   }

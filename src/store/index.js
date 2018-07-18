@@ -9,11 +9,10 @@ Vue.use(Router)
 import db from '@/components/firebaseInit'
 
 export const store = new Vuex.Store({
-  state:{ 
+  state:{
     items:[],
     shoppingLists:[],
-    shoppingListsNames:[],
-    user: null,
+    shopNames:[],
     loading: false,
     error: null
   },
@@ -22,8 +21,8 @@ export const store = new Vuex.Store({
     updateshoppingLists(state, data) {
       state.shoppingLists.push(data)
     },
-    updateshoppingListsNames(state, data) {
-      state.shoppingListsNames.push(data)
+    updateshopNames(state, data) {
+      state.shopNames.push(data)
     },
     createNewList (state, payload) {
       state.shoppingLists.unshift(payload)
@@ -39,9 +38,7 @@ export const store = new Vuex.Store({
       })
       console.log('List nachher:', list);
     },
-    setUser (state, payload) {
-      state.user = payload
-    },
+
     setLoading (state, payload) {
       state.loading = payload
     },
@@ -51,8 +48,8 @@ export const store = new Vuex.Store({
     clearError (state) {
       state.error = null
     },
-    clearShoppingListsNames (state) {
-      state.shoppingListsNames = []
+    clearShopNames (state) {
+      state.shopNames = []
     }
   },
 
@@ -64,7 +61,7 @@ export const store = new Vuex.Store({
       console.log('querySnapshot.empty: ', querySnapshot.empty);
       if (querySnapshot.empty==false){
       querySnapshot.forEach(function(doc) {
-        
+
         // doc.data() is never undefined for query doc snapshots
         //console.log(doc.id, " => ", doc.data());
         const data = {
@@ -75,28 +72,29 @@ export const store = new Vuex.Store({
         }
         context.commit('updateshoppingLists', data)
         context.commit('setLoading', false)
-      
+
       })
       }
-      
+
       else {
         context.commit('setLoading', false)
         console.log('No Data!!');
       }
-      
+
       }).catch(error => console.log(error));
     },
 
-    fetchDataShoppingListsNames(context) {
+    fetchDataShopNames(context) {
       context.commit('setLoading', true)
-      context.commit('clearShoppingListsNames')
-    db.collection("shoppingLists").orderBy('list_date', 'desc').get()
+      context.commit('clearShopNames')
+    db.collection("shopNames").orderBy('shop_name', 'desc').get()
     .then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
         const data = {
-          'text': doc.data().list_name,
+          'text': doc.data().shop_name,
         }
-        context.commit('updateshoppingListsNames', data)
+        console.log(data)
+        context.commit('updateshopNames', data)
         context.commit('setLoading', false)
       })
       }).catch(error => console.log(error));
@@ -122,20 +120,20 @@ export const store = new Vuex.Store({
           list_id: key
         })
         commit('setLoading', false)
-      
+
       })
       .catch(error => console.log(error))
-      
+
     },
 
     createNewItem ({commit}, payload) {
       commit('setLoading', true)
       db.collection("shoppingLists").doc(payload.id).get()
       .then(function(doc) {
-        
+
         console.log(doc.id, " => ", doc.data().list_items)
 
-       
+
 
         let newItem = (doc.data().list_items.concat(new Object({
           checked: false,
@@ -156,60 +154,60 @@ export const store = new Vuex.Store({
         })
         .catch(error => console.log(error))
       });
-      
-    },
 
-    regUserUp({commit}, payload) {
-      commit('setLoading', true)
-      commit('clearError')
-      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
-      .then (
-        user => {
-          commit('setLoading', false)
-          const newUser = {
-            id: user.uid,
-            shoppingLists: []
-          }
-          commit('setUser', newUser)
-        }
-      )
-      .catch (
-        error => {
-          commit('setLoading', false)
-          commit('setError', error)
-          console.log(error)
-        }
-      )
-    },
-
-    logUserIn ({commit}, payload) {
-      commit('setLoading', true)
-      commit('clearError')
-      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
-      .then(
-        user => {
-          commit('setLoading', false)
-          const newUser = {
-            id: user.uid,
-            shoppingLists: []
-          }
-          commit('setUser', newUser)
-        }
-      )
-      .catch (
-        error => {
-          commit('setLoading', false)
-          commit('setError', error)
-          console.log(error)
-        }
-      )
-    },
-    clearError ({commit}) {
-      commit('clearError')
-    },
-    clearShoopingListsNames ({commit}) {
-      commit('clearShoppingListsNames')
     }
+
+    // regUserUp({commit}, payload) {
+    //   commit('setLoading', true)
+    //   commit('clearError')
+    //   firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+    //   .then (
+    //     user => {
+    //       commit('setLoading', false)
+    //       const newUser = {
+    //         id: user.uid,
+    //         shoppingLists: []
+    //       }
+    //       commit('setUser', newUser)
+    //     }
+    //   )
+    //   .catch (
+    //     error => {
+    //       commit('setLoading', false)
+    //       commit('setError', error)
+    //       console.log(error)
+    //     }
+    //   )
+    // },
+
+    // logUserIn ({commit}, payload) {
+    //   commit('setLoading', true)
+    //   commit('clearError')
+    //   firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+    //   .then(
+    //     user => {
+    //       commit('setLoading', false)
+    //       const newUser = {
+    //         id: user.uid,
+    //         shoppingLists: []
+    //       }
+    //       commit('setUser', newUser)
+    //     }
+    //   )
+    //   .catch (
+    //     error => {
+    //       commit('setLoading', false)
+    //       commit('setError', error)
+    //       console.log(error)
+    //     }
+    //   )
+    // },
+    // clearError ({commit}) {
+    //   commit('clearError')
+    // },
+    // clearShoopingListsNames ({commit}) {
+    //   commit('clearShoppingListsNames')
+    // }
   },
 
   getters:{
@@ -218,8 +216,8 @@ export const store = new Vuex.Store({
       return state.shoppingLists
     },
 
-    shoppingListsNames (state) {
-      return state.shoppingListsNames
+    shopNames (state) {
+      return state.shopNames
     },
 
     shoppingList (state) {
@@ -228,10 +226,6 @@ export const store = new Vuex.Store({
           return list.list_id === listID
         })
       }
-    },
-
-    user (state) {
-      return state.user
     },
 
     loading (state) {
