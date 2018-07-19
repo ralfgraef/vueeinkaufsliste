@@ -111,6 +111,10 @@ export const store = new Vuex.Store({
           }
         ]
       }
+
+      const shop = {
+        shop_name: payload.name
+      }
       //Reach out to firestore and store
       db.collection('shoppingLists').add(list)
       .then((data) => {
@@ -131,7 +135,7 @@ export const store = new Vuex.Store({
       db.collection("shoppingLists").doc(payload.id).get()
       .then(function(doc) {
 
-        console.log(doc.id, " => ", doc.data().list_items)
+        console.log(doc.id, " => lala ", doc.data().list_items)
 
 
 
