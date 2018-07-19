@@ -93,7 +93,6 @@ export const store = new Vuex.Store({
         const data = {
           'text': doc.data().shop_name,
         }
-        console.log(data)
         context.commit('updateshopNames', data)
         context.commit('setLoading', false)
       })
@@ -115,6 +114,8 @@ export const store = new Vuex.Store({
       const shop = {
         shop_name: payload.name
       }
+
+      console.log('Shopname: ',shop.shop_name)
       //Reach out to firestore and store
       db.collection('shoppingLists').add(list)
       .then((data) => {

@@ -8,7 +8,7 @@
     <br>
     <v-layout row>
       <v-flex xs12>
-        <form @submit.prevent="onCreateNewListSelect">
+        <form @submit.prevent="onCreateNewListSelect(shopNames)">
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
                <v-select
@@ -95,11 +95,26 @@
         this.$store.dispatch('createNewList', listData)
         this.$router.push('/')
       },
-      onCreateNewListSelect () {
-        if(!this.formIsValid) {
+      onCreateNewListSelect (shopNames) {
+        if(!this.formSelectIsValid) {
           return
         }
-        console.log(this.e1.text);
+        let ele = this.e1.text;
+        // console.log('Values: ', Object.values(shopNames));
+        // Object.keys(shopNames).forEach(function(key) {
+
+        //   console.log(shopNames[key].text);
+
+        // });
+
+        shopNames.forEach( shopNames => {
+          if(Object.values(shopNames).includes(ele)){
+            alert("Yes!!");
+          }
+        });
+
+        console.log('shopNames: ', shopNames);
+        console.log('Ausgewähltes Element: ', ele);
         const listData = {
         name: this.e1.text,
         date: new Date(),
