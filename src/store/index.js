@@ -24,6 +24,9 @@ export const store = new Vuex.Store({
     updateshopNames(state, data) {
       state.shopNames.push(data)
     },
+    createNewShop (state, payload) {
+      state.shopNames.unshift(payload)
+    },
     createNewList (state, payload) {
       state.shoppingLists.unshift(payload)
     },
@@ -105,15 +108,10 @@ export const store = new Vuex.Store({
       const shop = {
         shop_name: payload.name
       }
-
+      console.log(shop);
       //Reach out to firestore and store
       db.collection('shopNames').add(shop)
       .then((data) => {
-        const key = data.id
-        commit('createNewList', {
-          ...shop,
-          shop_id: key
-        })
         commit('setLoading', false)
 
       })
@@ -133,7 +131,6 @@ export const store = new Vuex.Store({
         ]
       }
 
-      console.log('Shopname: ',shop.shop_name)
       //Reach out to firestore and store
       db.collection('shoppingLists').add(list)
       .then((data) => {

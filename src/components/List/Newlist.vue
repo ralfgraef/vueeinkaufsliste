@@ -8,17 +8,15 @@
     <br>
     <v-layout row>
       <v-flex xs12>
-        <form @submit.prevent="onCreateNewListSelect(shopNames)">
+        <form @submit.prevent="onCreateNewListSelect()">
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
                <v-select
                 :items="shopNames"
                 v-model="e1"
                 label="Such Dir einen bereits vorhandenen Shop aus..."
-                single-line
                 color="grey"
-                required
-                >
+               >
                 </v-select>
               <br>
               
@@ -34,7 +32,7 @@
     </v-layout>
     <v-layout row>
       <v-flex xs12>
-        <form @submit.prevent="onCreateNewList">
+        <form @submit.prevent="onCreateNewList(shopNames)">
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
             
@@ -44,7 +42,7 @@
                 id="name"
                 color="grey"
                 v-model="name"
-                required
+                
                 >
               </v-text-field>
             </v-flex>
@@ -84,7 +82,7 @@
     },
 
     methods: {
-      onCreateNewList () {
+      onCreateNewList (shopNames) {
         if(!this.formIsValid) {
           return
         }
@@ -93,28 +91,42 @@
         date: new Date(),
         }
         this.$store.dispatch('createNewList', listData)
+        console.log('Name', listData.name);
+        console.log('shopNames', shopNames);
+        
+        
+        // function checkNewShop(test) {
+        //   shopNames.forEach( (shopNames) => {
+        //     if(!Object.values(shopNames).includes(listData.name)){
+        //       console.log('Ist noch nicht drin, Puppekopp!!!');
+        //       return true;
+        //     } else{
+        //       return false;
+        //     }
+        //   });
+        //}
+        let result = shopNames.map(a => a.text);
+        
+        console.log(result);
+        if (!result.includes(listData.name)) {
+          alert('Ist nix drin, kommt jetzt rein!!');
+           this.$store.dispatch('createNewShop', listData);
+        } else {
+          console.log('Ist drin, braucht nicht rein!');
+        }
+
+        // if(newShop) {
+        //   this.$store.dispatch('createNewShop', listData);
+        // }
+        
         this.$router.push('/')
       },
-      onCreateNewListSelect (shopNames) {
+
+      onCreateNewListSelect () {
         if(!this.formSelectIsValid) {
           return
         }
-        let ele = this.e1.text;
-        // console.log('Values: ', Object.values(shopNames));
-        // Object.keys(shopNames).forEach(function(key) {
 
-        //   console.log(shopNames[key].text);
-
-        // });
-
-        shopNames.forEach( shopNames => {
-          if(Object.values(shopNames).includes(ele)){
-            alert("Yes!!");
-          }
-        });
-
-        console.log('shopNames: ', shopNames);
-        console.log('Ausgewähltes Element: ', ele);
         const listData = {
         name: this.e1.text,
         date: new Date(),
