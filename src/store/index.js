@@ -99,6 +99,28 @@ export const store = new Vuex.Store({
       }).catch(error => console.log(error));
     },
 
+    createNewShop({commit}, payload) {
+      commit('setLoading', true)
+
+      const shop = {
+        shop_name: payload.name
+      }
+
+      //Reach out to firestore and store
+      db.collection('shopNames').add(shop)
+      .then((data) => {
+        const key = data.id
+        commit('createNewList', {
+          ...shop,
+          shop_id: key
+        })
+        commit('setLoading', false)
+
+      })
+      .catch(error => console.log(error))
+
+    },
+
     createNewList ({commit}, payload) {
       commit('setLoading', true)
       const list = {
@@ -109,10 +131,6 @@ export const store = new Vuex.Store({
             checked:false
           }
         ]
-      }
-
-      const shop = {
-        shop_name: payload.name
       }
 
       console.log('Shopname: ',shop.shop_name)
