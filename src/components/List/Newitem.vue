@@ -14,14 +14,15 @@
             <v-flex xs12 sm6 offset-sm3>
              
              <v-text-field 
-                
+                v-if="item.name"
                 name="item"
                 autofocus:true
                 color="grey"
                 v-model="item.name"
                 multiple
                 id="Itemhinzu"
-                >
+                clearable               
+              >
                 
               </v-text-field>
 
@@ -65,7 +66,7 @@
             <v-flex xs12 sm6 offset-sm3>
               <v-btn :disabled="!formIsValid" @click="onCreateMore">Mehr ...</v-btn> 
             
-              <v-btn :disabled="!formIsValid" @click="onShowFinds">Das war's!</v-btn> 
+              <v-btn :disabled="!formIsValid" @click="onCreateNewItem">Das war's!</v-btn> 
             </v-flex>
           </v-layout>
   </v-container>
@@ -102,15 +103,27 @@
         if(!this.formIsValid) {
           return
         }
+    
+        this.finds.forEach(()=>{
+          console.log(this.finds);
+        });
 
-        const itemData = {
-        name: this.item,
-        checked: false,
-        id: this.list_id
-        }  
+        let itemData = [];
+        let len = this.finds.length;
+
+        for (var i = 0; i < len; i++) {
+            itemData.push({
+              name: this.finds[i].name,
+              checked: false,
+              id: this.list_id
+            });
+        }
+      
+        console.log('itemData: ', itemData)
+        console.log('itemDataLength: ', this.finds.length)
+      
         this.$store.dispatch('createNewItem', itemData)
         this.$router.push('/list/' + this.list_id)
-        console.log(itemData)
       },
 
       onCreateMore() {

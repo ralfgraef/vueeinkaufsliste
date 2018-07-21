@@ -148,7 +148,8 @@ export const store = new Vuex.Store({
 
     createNewItem ({commit}, payload) {
       commit('setLoading', true)
-      db.collection("shoppingLists").doc(payload.id).get()
+      console.log('payload: ', payload);
+      db.collection("shoppingLists").doc(payload[0].id).get()
       .then(function(doc) {
 
         console.log(doc.id, " => lala ", doc.data().list_items)
@@ -157,17 +158,17 @@ export const store = new Vuex.Store({
 
         let newItem = (doc.data().list_items.concat(new Object({
           checked: false,
-          name: payload.name,
+          name: payload[0].name,
         })))
 
         console.log('Neues Array: ', newItem)
         //Reach out to firestore and store
-        db.collection('shoppingLists').doc(payload.id).update({
+        db.collection('shoppingLists').doc(payload[0].id).update({
 
           'list_items': newItem
         })
         .then(() => {
-          commit('updateListItems', payload)
+          //commit('updateListItems', payload)
           commit('setLoading', false)
           console.log('Updated!')
 
